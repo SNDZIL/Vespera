@@ -8,7 +8,9 @@ export default function HomePage() {
         <div className="max-w-8xl mx-auto inline-block items-center p-3 pt-0 lg:flex lg:flex-wrap lg:pt-4 lg:my-10">
           <div className="lg:w-3/6">
             <h1 className="max-w-xl lg:text-[4.2em] text-3xl font-bold leading-none text-black inline-block">
-              Vespera – Innovative Payment, Redefining Transactions
+              Vespera -
+              <br />
+              Innovative Payment, Redefining Transactions
             </h1>
             <p className="mt-6 max-w-2xl text-xl font-semibold text-[#404040]">
               Vespera offers a revolutionary payment method that enables users
