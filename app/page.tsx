@@ -47,14 +47,23 @@ export default function HomePage() {
                 </h2>
               </div>
 
-              <div className="grid grid-cols-2 gap-16">
+              <div className="grid grid-cols-3 gap-16">
                 <div className="flex items-center justify-center">
                   <Image
-                    src="/images/sightlogo.svg"
-                    width={127}
-                    height={47}
+                    src="/images/vespera_logo.jpg"
+                    width={160}
+                    height={160}
                     alt="Logo"
-                    className="block h-24 object-contain"
+                    className="block h-40 object-contain"
+                  />
+                </div>
+                <div className="flex items-center justify-center">
+                  <Image
+                    src="/images/EverMove.jpg"
+                    alt="EverMove"
+                    width={160}
+                    height={160}
+                    className="block h-40 object-contain"
                   />
                 </div>
                 <div className="flex items-center justify-center">
@@ -63,7 +72,7 @@ export default function HomePage() {
                     alt="Icon"
                     width={160}
                     height={160}
-                    className="block h-24 object-contain"
+                    className="block h-40 object-contain"
                   />
                 </div>
               </div>
@@ -100,7 +109,7 @@ export default function HomePage() {
                 </div>
                 <div className="mt-4 w-full flex-col lg:mt-4 lg:inline-block lg:w-full">
                   <Image
-                    src="/images/FHE.png"
+                    src="/images/Work Flow.png"
                     alt="New Payment Model"
                     width={2513}
                     height={1238}
@@ -126,10 +135,10 @@ export default function HomePage() {
                 </div>
                 <div className="mt-4 w-full flex-col lg:mt-4 lg:inline-block lg:w-full">
                   <Image
-                    src="/images/Sight Oracle.png"
+                    src="/images/AI Agent.png"
                     alt="Merchant Credit Evaluation"
-                    width={2235}
-                    height={933}
+                    width={1500}
+                    height={742}
                     className="home-intro-image"
                   />
                 </div>
