@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { WalletSelector } from "./WalletSelector";
 
 /** 隐藏地址显示，例如 0x1234...abcd */
 export function shortenAddress(address: string) {
@@ -139,7 +140,7 @@ export default function Navbar() {
             onMouseEnter={() => walletAddress && setShowDropdown(true)}
             onMouseLeave={() => walletAddress && setShowDropdown(false)}
           >
-            <button
+            {/* <button
               onClick={handleButtonClick}
               className="bg-blue-400 hover:bg-blue-500 px-8 py-3 lg:text-lg font-semibold uppercase rounded text-white cursor-pointer"
             >
@@ -159,7 +160,8 @@ export default function Navbar() {
                   logout
                 </button>
               </div>
-            )}
+            )} */}
+            <WalletSelector></WalletSelector>
           </div>
 
           {/* 移动端菜单图标 */}
