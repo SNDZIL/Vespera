@@ -129,7 +129,15 @@ export default function Navbar() {
         <div className="flex items-center space-x-8">
           <div className="hidden lg:inline-flex">
             <Link
-              href="/merchant"
+              href="/enroll"
+              className="text-xl text-black hover:underline hover:text-blue-400"
+            >
+              Enroll
+            </Link>
+          </div>
+          <div className="hidden lg:inline-flex">
+            <Link
+              href="/dashboard"
               className="text-xl text-black hover:underline hover:text-blue-400"
             >
               Merchant
@@ -213,6 +221,15 @@ export default function Navbar() {
       {/* 移动端菜单：仅在小屏幕且菜单展开时显示 */}
       {mobileMenuOpen && (
         <div className="lg:hidden fixed top-30 md:top-25 left-0 w-full bg-white shadow-md z-40">
+          <div className="flex flex-col items-center space-y-4 py-4">
+            <Link
+              href="/enroll"
+              className="text-xl text-black hover:underline"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Enroll
+            </Link>
+          </div>
           <div className="flex flex-col items-center space-y-4 py-4">
             <Link
               href="/merchant"

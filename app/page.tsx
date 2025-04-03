@@ -189,7 +189,7 @@ export default function HomePage() {
           </div>
           <div className="flex w-full flex-row justify-center pt-24 text-center">
             <a
-              href="/faucet"
+              href="/enroll"
               className="underline-blue px-8 text-xl font-semibold text-black"
             >
               Get Started
