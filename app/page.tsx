@@ -22,7 +22,7 @@ export default function HomePage() {
           </div>
           <div className="mb-10 mt-10 hidden w-full flex-col lg:mt-12 lg:inline-block lg:w-3/6">
             <Image
-              src="/images/homepage.jpg"
+              src="/images/home.png"
               width={2048}
               height={1365}
               className="w-full h-auto"
@@ -31,7 +31,7 @@ export default function HomePage() {
           </div>
           <div className="my-10 inline-block w-full flex-col lg:mt-0 lg:hidden lg:w-2/5">
             <Image
-              src="/images/homepage.jpg"
+              src="/images/home.png"
               alt="PayFi"
               width={2048}
               height={1365}
