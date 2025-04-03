@@ -18,7 +18,7 @@ export default function RootLayout({
       <body className="bg-gray-50 text-gray-900">
         <WalletProvider>
         <Navbar />
-        <main className="container mx-auto p-4 mt-50 md:mt-40 lg:mt-30">
+        <main className="container mx-auto p-4 mt-30 ">
           {children}
         </main>
         </WalletProvider>

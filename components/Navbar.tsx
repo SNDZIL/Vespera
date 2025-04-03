@@ -143,6 +143,14 @@ export default function Navbar() {
               Merchant
             </Link>
           </div>
+          <div className="hidden lg:inline-flex">
+            <Link
+              href="/consumer"
+              className="text-xl text-black hover:underline hover:text-blue-400"
+            >
+              Use Case
+            </Link>
+          </div>
           <div
             className="relative inline-block"
             onMouseEnter={() => walletAddress && setShowDropdown(true)}
@@ -232,11 +240,20 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col items-center space-y-4 py-4">
             <Link
-              href="/merchant"
+              href="/dashboard"
               className="text-xl text-black hover:underline"
               onClick={() => setMobileMenuOpen(false)}
             >
               Merchant
+            </Link>
+          </div>
+          <div className="flex flex-col items-center space-y-4 py-4">
+            <Link
+              href="/consumer"
+              className="text-xl text-black hover:underline"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Use Case
             </Link>
           </div>
         </div>

@@ -60,27 +60,6 @@ const DashboardPage: React.FC = () => {
               </div>
             </div>
 
-            {/* 下方区域：Active users + Line Chart */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <h2 className="text-lg font-semibold mb-2">
-                  Active users right now
-                </h2>
-                <div className="text-2xl font-bold mb-4">82 Users</div>
-                <div className="h-40 flex items-center justify-center text-gray-400">
-                  Active Users Chart Placeholder
-                </div>
-              </div>
-              <div className="bg-white p-4 rounded-md shadow-sm">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-lg font-semibold">Line Chart</h2>
-                </div>
-                <div className="h-40 flex items-center justify-center text-gray-400">
-                  Line Chart Placeholder
-                </div>
-              </div>
-            </div>
-
             {/* TransactionHistory 组件 */}
             <TransactionHistory />
           </div>
