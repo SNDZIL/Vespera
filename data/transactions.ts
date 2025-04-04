@@ -6,6 +6,7 @@ export interface Transaction {
     amount: string;
     time: string;
     repaymentTime: string;
+    isRepaid: boolean;
   }
   
   export const transactions: Transaction[] = [
@@ -15,6 +16,7 @@ export interface Transaction {
       amount: "$300",
       time: "Jan 13 2025, 10:00 AM",
       repaymentTime: "Jan 20 2025, 10:00 AM",
+      isRepaid: false,
     },
     {
       transactionHash: "0xdef456",
@@ -22,6 +24,7 @@ export interface Transaction {
       amount: "$500",
       time: "Jan 14 2025, 11:00 AM",
       repaymentTime: "Jan 21 2025, 11:00 AM",
+      isRepaid: false,
     },
     {
       transactionHash: "0xghi789",
@@ -29,6 +32,7 @@ export interface Transaction {
       amount: "$250",
       time: "Jan 15 2025, 12:00 PM",
       repaymentTime: "Jan 22 2025, 12:00 PM",
+      isRepaid: false,
     },
   ];
   

@@ -144,7 +144,7 @@ export default function CoffeePage() {
       // TODO: Replace the following dummy call with actual contract interaction logic.
       // For example: await contract.callFunction(receiver, amountParam, repayTimeParam);
       const amount = typeof amountParam === 'string' ? parseFloat(amountParam.toString())*10**6 : amountParam;
-      await sendLoan(CoffeeAddress, amount, repayTimeParam)
+      await sendLoan(CoffeeAddress, amount, Number(repayTimeParam))
       toast.success("Payment Success!");
     } catch (error) {
       toast.error("Contract call failed.");
