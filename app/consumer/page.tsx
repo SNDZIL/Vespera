@@ -3,12 +3,7 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import {
-  aptos,
-  CoffeeAddress,
-  ConfigAddress,
-  MODULE,
-} from "@/data/aptosCoinfig";
+import { aptos, CoffeeAddress, CoffeeProfile, ConfigAddress, MODULE } from "@/data/aptosCoinfig";
 import { ADDRESS } from "@/data/aptosCoinfig";
 import { getTime } from "@/lib/utils";
 
@@ -191,7 +186,7 @@ export default function CoffeePage() {
       sender: account.address,
       data: {
         function: `${ADDRESS}::${MODULE}::lendToSeller`,
-        functionArguments: [seller, amount, time, ConfigAddress],
+        functionArguments: [seller, amount, time, ConfigAddress, CoffeeProfile],
       },
     });
     try {
