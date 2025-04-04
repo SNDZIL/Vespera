@@ -1,4 +1,4 @@
-import { Aptos, AptosConfig, Network } from '@aptos-labs/ts-sdk';
+import { Aptos, AptosConfig, InputViewFunctionData, Network } from '@aptos-labs/ts-sdk';
  
 const config = new AptosConfig({ network: Network.TESTNET });
 export const aptos = new Aptos(config);
@@ -16,7 +16,7 @@ export const getMaxCredit = async(address: string)=>{
     functionArguments: [address],
   };
    
-  const maxCredit = (await aptos.view({ payload }))[0];
+  const maxCredit = (await aptos.view({ payload: payload as InputViewFunctionData }))[0];
   return maxCredit;
 }
 
@@ -25,7 +25,7 @@ export const gerCurrentCredit = async(address: string)=>{
     function: `${ADDRESS}::${MODULE}::viewCurrent`,
     functionArguments: [address],
   };
-  const currentCredit = (await aptos.view({ payload }))[0];
+  const currentCredit = (await aptos.view({ payload: payload as InputViewFunctionData }))[0];
   return currentCredit;
 }
 

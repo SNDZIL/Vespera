@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import TransactionHistory from "@/components/TransactionHistory";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { getMacCredit, CoffeeProfile } from "@/data/aptosCoinfig";
+import { getMaxCredit, gerCurrentCredit, CoffeeProfile } from "@/data/aptosCoinfig";
 
 const DashboardPage: React.FC = () => {
   const { account } = useWallet();
@@ -13,10 +13,10 @@ const DashboardPage: React.FC = () => {
   useEffect(() => {
     const fetchCredit = async () => {
       if (account) {
-        const getMaxCredit = await getMacCredit(CoffeeProfile);
-        const getCurrCredit = await getMacCredit(CoffeeProfile);
-        setMaxCredit(getMaxCredit ? Number(getMaxCredit) : 2);
-        setCurrCredit(getCurrCredit ? Number(getCurrCredit) : 2);
+        const maxCreditValue = await getMaxCredit(CoffeeProfile);
+        const currCreditValue = await gerCurrentCredit(CoffeeProfile);
+        setMaxCredit(maxCreditValue ? Number(maxCreditValue) : 2);
+        setCurrCredit(currCreditValue ? Number(currCreditValue) : 2);
       }
     };
     fetchCredit();

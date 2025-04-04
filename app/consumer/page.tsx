@@ -8,7 +8,7 @@ import { ADDRESS } from "@/data/aptosCoinfig";
 import { getTime } from "@/lib/utils";
 
 export default function CoffeePage() {
-  const { account, connected, disconnect, wallet, signAndSubmitTransaction } =
+  const { account, signAndSubmitTransaction } =
     useWallet();
 
   // Coffee list with image paths added
@@ -131,8 +131,7 @@ export default function CoffeePage() {
 
     setIsLoading(true);
 
-    // Prepare parameters for contract call
-    const receiver = account;
+    // Prepare parameters for contract call;
     let amountParam: string | number, repayTimeParam: string | number;
     if (!isAmountToTime) {
       // Mode: "Select repayment time"

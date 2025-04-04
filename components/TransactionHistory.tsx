@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { ADDRESS, ConfigAddress, CoffeeProfile, MODULE, aptos, lendObj } from "@/data/aptosCoinfig";
+import { ADDRESS, ConfigAddress, MODULE, aptos, lendObj } from "@/data/aptosCoinfig";
 import toast from "react-hot-toast";
 
 interface Transaction {
