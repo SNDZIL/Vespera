@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "json-server": "npx json-server data/txns.json --port 8000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
