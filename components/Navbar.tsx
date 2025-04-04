@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { WalletSelector } from "./WalletSelector";
 import { Button } from "./ui/button";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import Image from "next/image";
 /** 隐藏地址显示，例如 0x1234...abcd */
 export function shortenAddress(address: string) {
   if (!address) return "";
@@ -17,7 +18,8 @@ export default function Navbar() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const { account, connected, disconnect, wallet, signAndSubmitTransaction } = useWallet();
+  const { account, connected, disconnect, wallet, signAndSubmitTransaction } =
+    useWallet();
 
   useEffect(() => {
     localStorage.removeItem("walletAddress");
@@ -121,9 +123,16 @@ export default function Navbar() {
         <div className="flex items-center space-x-8 ml-4">
           <Link
             href="/"
-            className="text-xl md:text-3xl font-bold text-black uppercase"
+            className="flex items-center text-xl md:text-3xl font-bold text-black uppercase"
           >
-            Vespera
+            <Image
+              src="/images/logo2.svg"
+              width={100}
+              height={82}
+              alt="VESPERA"
+              className="hidden lg:inline-flex"
+            />
+            <p className="mt-1">Vespera</p>
           </Link>
         </div>
         {/* 右侧：钱包按钮与移动端菜单图标 */}
