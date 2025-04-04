@@ -101,8 +101,6 @@ export default function CoffeePage() {
       return;
     }
 
-    setIsLoading(true);
-
     if (!isAmountToTime) {
       // Mode: "Select repayment time" -> calculated amount is used.
       if (!inputTime) {
@@ -131,6 +129,8 @@ export default function CoffeePage() {
       }
     }
 
+    setIsLoading(true);
+
     // Prepare parameters for contract call
     const receiver = account;
     let amountParam: string | number, repayTimeParam: string | number;
@@ -149,7 +149,7 @@ export default function CoffeePage() {
         typeof amountParam === "string"
           ? parseFloat(amountParam.toString()) * 10 ** 6
           : amountParam;
-      await sendLoan(CoffeeAddress, amount, Number(repayTimeParam));
+      const response = await sendLoan(CoffeeAddress, amount, Number(repayTimeParam));
       toast.success("Payment Success!");
       // here post history in the json server.
       const newRecord = {
