@@ -15,8 +15,8 @@ const DashboardPage: React.FC = () => {
       if (account) {
         const maxCreditValue = await getMaxCredit(CoffeeProfile);
         const currCreditValue = await gerCurrentCredit(CoffeeProfile);
-        setMaxCredit(maxCreditValue ? Number(maxCreditValue) : 2);
-        setCurrCredit(currCreditValue ? Number(currCreditValue) : 2);
+        setMaxCredit(maxCreditValue ? Number(maxCreditValue)/10**6 : 2);
+        setCurrCredit(currCreditValue ? (Number(maxCreditValue)-Number(currCreditValue))/10**6 : 2);
       }
     };
     fetchCredit();
@@ -25,7 +25,7 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-4 lg:p-8">
       {/* 顶部标题 */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 mt-8">
         <h1 className="text-3xl font-bold mb-4 lg:mb-0">Dashboard</h1>
       </div>
       {!account && (
@@ -38,7 +38,7 @@ const DashboardPage: React.FC = () => {
             <div className="bg-white p-4 rounded-md shadow-sm flex flex-col">
               <span className="text-sm text-gray-500">Credit Limit</span>
               <span className="text-2xl font-bold">{maxCredit}</span>
-              <span className="text-green-500 text-sm mt-1">+4.6%</span>
+              <span className="text-green-500 text-sm mt-1">+0.0%</span>
             </div>
             <div className="bg-white p-4 rounded-md shadow-sm flex flex-col">
               <span className="text-sm text-gray-500">Available Credit</span>
@@ -47,13 +47,13 @@ const DashboardPage: React.FC = () => {
             </div>
             <div className="bg-white p-4 rounded-md shadow-sm flex flex-col">
               <span className="text-sm text-gray-500">Outstanding Balance</span>
-              <span className="text-2xl font-bold">{maxCredit - currCredit}</span>
+              <span className="text-2xl font-bold">{(maxCredit - currCredit).toFixed(2)}</span>
               <span className="text-green-500 text-sm mt-1">+3.6%</span>
             </div>
             <div className="bg-white p-4 rounded-md shadow-sm flex flex-col">
-              <span className="text-sm text-gray-500">Customers</span>
-              <span className="text-2xl font-bold">20,516</span>
-              <span className="text-green-500 text-sm mt-1">+3.1%</span>
+              <span className="text-sm text-gray-500">Number of Debts</span>
+              <span className="text-2xl font-bold">8</span>
+              <span className="text-green-500 text-sm mt-1">+12.5%</span>
             </div>
           </div>
 

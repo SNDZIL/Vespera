@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { ADDRESS, ConfigAddress, MODULE, aptos, lendObj } from "@/data/aptosCoinfig";
 import toast from "react-hot-toast";
+import { getPayTime } from "@/lib/utils";
 
 interface Transaction {
   id: string;
@@ -37,6 +38,7 @@ const TransactionHistory: React.FC = () => {
   // 点击还款按钮后，调用 PATCH 接口更新 isRepaid 状态，并更新本地 state
   const handleRepay = async (tx: Transaction, index: number) => {
     try {
+      await repay(tx);
       const response = await fetch(`http://localhost:8000/transactions/${tx.id}`, {
         method: "PATCH",
         headers: {
@@ -44,7 +46,6 @@ const TransactionHistory: React.FC = () => {
         },
         body: JSON.stringify({ isRepaid: true }),
       });
-      await repay(tx);
       if (response.ok) {
         const updatedTx: Transaction = await response.json();
         const updatedTxList = [...txList];
@@ -80,6 +81,7 @@ const TransactionHistory: React.FC = () => {
       toast.success("Repayment successful");
     }
   }
+  
   if (loading) {
     return (
       <div className="bg-white p-4 rounded-md shadow-sm">
@@ -112,11 +114,11 @@ const TransactionHistory: React.FC = () => {
           <tbody>
             {txList.map((tx, idx) => (
               <tr key={tx.id} className="border-b border-gray-100">
-                <td className="py-3 px-4">{tx.transactionHash}</td>
-                <td className="py-3 px-4">{tx.buyer}</td>
+                <td className="py-3 px-4 max-w-[100px] truncate">{tx.transactionHash}</td>
+                <td className="py-3 px-4 max-w-[100px] truncate">{tx.buyer}</td>
                 <td className="py-3 px-4">{tx.amount}</td>
                 <td className="py-3 px-4">{tx.time}</td>
-                <td className="py-3 px-4">{tx.repaymentTime}</td>
+                <td className="py-3 px-4">{getPayTime(tx.repaymentTime, tx.time)}</td>
                 <td className="py-3 px-4">
                   {tx.isRepaid ? (
                     <span className="text-green-500">Paid</span>
