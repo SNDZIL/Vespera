@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 import { AptosWalletAdapterProvider } from "@aptos-labs/wallet-adapter-react";
 // Internal components
 // import { useToast } from "@/components/ui/use-toast";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 // Internal constants
 import { NETWORK } from "../constants";

@@ -44,7 +44,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export function WalletSelector() {
   const { account, connected, disconnect, wallet } = useWallet();

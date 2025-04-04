@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
 import toast, { Toaster } from "react-hot-toast"; // 引入 Toast 组件
 import { aptos, ADDRESS, MODULE } from "@/data/aptosCoinfig";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 export default function FaucetPage() {
-  const { account, connected, disconnect, wallet, signAndSubmitTransaction } =
+  const { account, signAndSubmitTransaction } =
     useWallet();
-  const [userAddress, setUserAddress] = useState("");
   const [result, setResult] = useState<string | null>(null);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);

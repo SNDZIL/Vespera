@@ -5,8 +5,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { WalletSelector } from "./WalletSelector";
-import { Button } from "./ui/button";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import Image from "next/image";
 /** 隐藏地址显示，例如 0x1234...abcd */
 export function shortenAddress(address: string) {
@@ -18,9 +16,6 @@ export default function Navbar() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const { account, connected, disconnect, wallet, signAndSubmitTransaction } =
-    useWallet();
-
   useEffect(() => {
     localStorage.removeItem("walletAddress");
     localStorage.removeItem("jwt");
@@ -30,89 +25,89 @@ export default function Navbar() {
   }, []);
 
   /** 点击连接按钮时执行连接+签名+登录流程 */
-  const handleConnectWallet = async () => {
-    if (!window.ethereum) {
-      toast.error("MetaMask is not installed.");
-      console.error("MetaMask is not installed.");
-      return;
-    }
+  // const handleConnectWallet = async () => {
+  //   if (!window.ethereum) {
+  //     toast.error("MetaMask is not installed.");
+  //     console.error("MetaMask is not installed.");
+  //     return;
+  //   }
 
-    try {
-      // 1. 请求用户连接钱包，获取地址
-      const accounts = (await window.ethereum.request({
-        method: "eth_requestAccounts",
-      })) as string[];
-      const account = String(accounts[0]);
-      console.log("Connected account:", account);
+  //   try {
+  //     // 1. 请求用户连接钱包，获取地址
+  //     const accounts = (await window.ethereum.request({
+  //       method: "eth_requestAccounts",
+  //     })) as string[];
+  //     const account = String(accounts[0]);
+  //     console.log("Connected account:", account);
 
-      // 2. 请求后端 nonce
-      const nonceRes = await axios.post(
-        "http://localhost:3333/auth/request-nonce",
-        {
-          address: account,
-        }
-      );
-      const nonce = nonceRes.data.nonce;
-      console.log("Received nonce:", nonce);
+  //     // 2. 请求后端 nonce
+  //     const nonceRes = await axios.post(
+  //       "http://localhost:3333/auth/request-nonce",
+  //       {
+  //         address: account,
+  //       }
+  //     );
+  //     const nonce = nonceRes.data.nonce;
+  //     console.log("Received nonce:", nonce);
 
-      // 3. 使用钱包对 nonce 进行签名
-      const signature = await window.ethereum.request({
-        method: "personal_sign",
-        params: [nonce, account],
-      });
-      console.log("Signature:", signature);
+  //     // 3. 使用钱包对 nonce 进行签名
+  //     const signature = await window.ethereum.request({
+  //       method: "personal_sign",
+  //       params: [nonce, account],
+  //     });
+  //     console.log("Signature:", signature);
 
-      // 4. 调用登录接口，获取 JWT
-      const loginRes = await axios.post("http://localhost:3333/auth/login", {
-        address: account,
-        signature,
-      });
-      const loginData = loginRes.data;
-      console.log("Login response:", loginData);
+  //     // 4. 调用登录接口，获取 JWT
+  //     const loginRes = await axios.post("http://localhost:3333/auth/login", {
+  //       address: account,
+  //       signature,
+  //     });
+  //     const loginData = loginRes.data;
+  //     console.log("Login response:", loginData);
 
-      // 5. 登录成功后保存 JWT 和钱包地址到 localStorage，再更新状态
-      if (loginData.access_token) {
-        localStorage.setItem("jwt", loginData.access_token);
-        localStorage.setItem("walletAddress", account);
-        if (typeof window !== "undefined") {
-          window.dispatchEvent(new Event("walletChanged"));
-        }
-        // console.log('JWT and walletAddress saved');
-        toast.success("Wallet connected successfully!");
-        setWalletAddress(account);
-      } else {
-        // console.error('login fail：', loginData);
-        setWalletAddress(null);
-        toast.error("Failed to log in.");
-      }
-    } catch (error) {
-      // console.error('The connecting process or authtication process is wrong：', error);
-      setWalletAddress(null);
-      toast.error(`Failed to connect wallet. ${error}`);
-    }
-  };
+  //     // 5. 登录成功后保存 JWT 和钱包地址到 localStorage，再更新状态
+  //     if (loginData.access_token) {
+  //       localStorage.setItem("jwt", loginData.access_token);
+  //       localStorage.setItem("walletAddress", account);
+  //       if (typeof window !== "undefined") {
+  //         window.dispatchEvent(new Event("walletChanged"));
+  //       }
+  //       // console.log('JWT and walletAddress saved');
+  //       toast.success("Wallet connected successfully!");
+  //       setWalletAddress(account);
+  //     } else {
+  //       // console.error('login fail：', loginData);
+  //       setWalletAddress(null);
+  //       toast.error("Failed to log in.");
+  //     }
+  //   } catch (error) {
+  //     // console.error('The connecting process or authtication process is wrong：', error);
+  //     setWalletAddress(null);
+  //     toast.error(`Failed to connect wallet. ${error}`);
+  //   }
+  // };
 
   /** 注销逻辑：移除 localStorage 中的 jwt 和 walletAddress */
-  const handleLogout = () => {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("walletAddress");
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new Event("walletChanged"));
-    }
-    setWalletAddress(null);
-    setShowDropdown(false);
-    toast.success("Logged out successfully.");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("jwt");
+  //   localStorage.removeItem("walletAddress");
+  //   if (typeof window !== "undefined") {
+  //     window.dispatchEvent(new Event("walletChanged"));
+  //   }
+  //   setWalletAddress(null);
+  //   setShowDropdown(false);
+  //   toast.success("Logged out successfully.");
+  // };
 
   /**
    * 如果未连接，点击按钮执行连接流程；
    * 如果已连接，则仅通过鼠标悬浮控制下拉菜单显示。
    */
-  const handleButtonClick = () => {
-    if (!walletAddress) {
-      handleConnectWallet();
-    }
-  };
+  // const handleButtonClick = () => {
+  //   if (!walletAddress) {
+  //     handleConnectWallet();
+  //   }
+  // };
 
   return (
     <>

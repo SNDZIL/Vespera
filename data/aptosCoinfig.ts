@@ -1,4 +1,4 @@
-import { Aptos, AptosConfig, Network } from '@aptos-labs/ts-sdk';
+import { Aptos, AptosConfig, InputViewFunctionData, Network } from '@aptos-labs/ts-sdk';
  
 const config = new AptosConfig({ network: Network.TESTNET });
 export const aptos = new Aptos(config);
@@ -8,23 +8,24 @@ export const MODULE = "lend"
 export const ConfigAddress = "0xec1d87f61881c45f7252a4c519e8486c1c530571d26245758a78ea8ca662a17e"
 export const CoffeeAddress = "0x376fba087c1103d3378ec9f73cd3302ed56111b2d7721b864985637ad8a5bd23"
 export const CoffeeProfile = "0x54da9d25ff0772524ff18bdba4351ddba425ca4ef7ebcead9bc55878e93bf23"
+export const lendObj = "0x2d52c03dad02c5d2846aa53acb3f3356053cc40d920c9bef3da4b8393d49056"
 
-export const getMacCredit = async(address: string)=>{
+export const getMaxCredit = async(address: string)=>{
   const payload = {
     function: `${ADDRESS}::${MODULE}::viewMax`,
-    arguments: [address],
+    functionArguments: [address],
   };
    
-  const maxCredit = (await aptos.view({ payload }))[0];
+  const maxCredit = (await aptos.view({ payload: payload as InputViewFunctionData }))[0];
   return maxCredit;
 }
 
 export const gerCurrentCredit = async(address: string)=>{
   const payload = {
     function: `${ADDRESS}::${MODULE}::viewCurrent`,
-    arguments: [address],
+    functionArguments: [address],
   };
-  const currentCredit = (await aptos.view({ payload }))[0];
+  const currentCredit = (await aptos.view({ payload: payload as InputViewFunctionData }))[0];
   return currentCredit;
 }
 
