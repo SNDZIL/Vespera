@@ -1,12 +1,26 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TransactionHistory from "@/components/TransactionHistory";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { gerCurrentCredit, getMaxCredit, CoffeeProfile } from "@/data/aptosCoinfig";
 
 const DashboardPage: React.FC = () => {
   const { account } = useWallet();
-
+  const [currentCredit, setCurrentCredit] = useState<number>(0);
+  const [maxCredit, setMaxCredit] = useState<number>(0);
+  useEffect(() => {
+    if (account) {
+      gerCurrentCredit(CoffeeProfile).then((value) => {
+        console.log(value);
+        setCurrentCredit(Number(value));
+      });
+      getMaxCredit(CoffeeProfile).then((value) => {
+        console.log(value);
+        setMaxCredit(Number(value));
+      });
+    }
+  }, [account]);
   return (
     <div className="max-w-7xl mx-auto p-4 lg:p-8">
       {/* 顶部标题 */}

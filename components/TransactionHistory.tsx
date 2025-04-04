@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { ADDRESS, ConfigAddress, CoffeeProfile, MODULE, aptos, lendObj } from "@/data/aptosCoinfig";
+import toast from "react-hot-toast";
 
 interface Transaction {
   id: string;
@@ -15,6 +18,7 @@ interface Transaction {
 const TransactionHistory: React.FC = () => {
   const [txList, setTxList] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
+  const {account, signAndSubmitTransaction} = useWallet();
 
   // 从 JSON Server 获取数据
   useEffect(() => {
@@ -40,6 +44,7 @@ const TransactionHistory: React.FC = () => {
         },
         body: JSON.stringify({ isRepaid: true }),
       });
+      await repay(tx);
       if (response.ok) {
         const updatedTx: Transaction = await response.json();
         const updatedTxList = [...txList];
@@ -52,7 +57,29 @@ const TransactionHistory: React.FC = () => {
       console.error("Error updating transaction:", error);
     }
   };
+  
+  const repay = async (tx: Transaction) => {
+    if (account == null) {
+      toast.error("Please connect your wallet.");
+      return;
+    }
 
+    try {
+      const response = await signAndSubmitTransaction({
+        sender: account.address,
+        data: {
+          function: `${ADDRESS}::${MODULE}::repayToLender`,
+          functionArguments: [lendObj, Number(tx.amount)*10**6, ConfigAddress],
+        },
+      });
+      // if you want to wait for transaction
+      await aptos.waitForTransaction({ transactionHash: response.hash });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      toast.success("Repayment successful");
+    }
+  }
   if (loading) {
     return (
       <div className="bg-white p-4 rounded-md shadow-sm">

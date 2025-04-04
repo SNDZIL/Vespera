@@ -34,7 +34,7 @@
       "amount": "50.01",
       "time": "2025/4/4 13:40:24",
       "repaymentTime": 24,
-      "isRepaid": false
+      "isRepaid": true
     }
   ],
   "merchants": []
