@@ -1,0 +1,16 @@
+[package]
+name = "ves"
+version = "1.0.0"
+authors = []
+
+[addresses]
+vespera = "0x60a67a4474353252bf06989d00e96b55f5d18f44554e6a8323afb4b94ae5e15"
+
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]
