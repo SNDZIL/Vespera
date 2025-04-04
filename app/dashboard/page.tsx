@@ -3,20 +3,20 @@
 import React, { useEffect, useState } from "react";
 import TransactionHistory from "@/components/TransactionHistory";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { getMacCredit } from "@/data/aptosCoinfig";
+import { getMacCredit, CoffeeProfile } from "@/data/aptosCoinfig";
 
 const DashboardPage: React.FC = () => {
   const { account } = useWallet();
-  const [ maxCredit, setMaxCredit ] = useState("");
-  const [ currCredit, setCurrCredit ] = useState("");
+  const [ maxCredit, setMaxCredit ] = useState(1);
+  const [ currCredit, setCurrCredit ] = useState(1);
 
   useEffect(() => {
     const fetchCredit = async () => {
       if (account) {
-        const getMaxCredit = await getMacCredit(account?.address);
-        const getCurrCredit = await getMacCredit(account?.address);
-        setMaxCredit(getMaxCredit ? String(getMaxCredit) : "");
-        setCurrCredit(getCurrCredit ? String(getCurrCredit) : "");
+        const getMaxCredit = await getMacCredit(CoffeeProfile);
+        const getCurrCredit = await getMacCredit(CoffeeProfile);
+        setMaxCredit(getMaxCredit ? Number(getMaxCredit) : 2);
+        setCurrCredit(getCurrCredit ? Number(getCurrCredit) : 2);
       }
     };
     fetchCredit();
@@ -47,7 +47,7 @@ const DashboardPage: React.FC = () => {
             </div>
             <div className="bg-white p-4 rounded-md shadow-sm flex flex-col">
               <span className="text-sm text-gray-500">Outstanding Balance</span>
-              <span className="text-2xl font-bold">45,021</span>
+              <span className="text-2xl font-bold">{maxCredit - currCredit}</span>
               <span className="text-green-500 text-sm mt-1">+3.6%</span>
             </div>
             <div className="bg-white p-4 rounded-md shadow-sm flex flex-col">

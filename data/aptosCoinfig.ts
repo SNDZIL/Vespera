@@ -11,7 +11,7 @@ export const CoffeeProfile = "0x54da9d25ff0772524ff18bdba4351ddba425ca4ef7ebcead
 
 export const getMacCredit = async(address: string)=>{
   const payload = {
-    function: `${ConfigAddress}::${MODULE}::viewMax`,
+    function: `${ADDRESS}::${MODULE}::viewMax`,
     arguments: [address],
   };
    
@@ -21,7 +21,7 @@ export const getMacCredit = async(address: string)=>{
 
 export const gerCurrentCredit = async(address: string)=>{
   const payload = {
-    function: `${ConfigAddress}::${MODULE}::viewCurrent`,
+    function: `${ADDRESS}::${MODULE}::viewCurrent`,
     arguments: [address],
   };
   const currentCredit = (await aptos.view({ payload }))[0];
