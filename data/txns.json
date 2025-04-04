@@ -1,33 +1,6 @@
 {
   "transactions": [
     {
-      "id": "1",
-      "transactionHash": "0xabc123",
-      "buyer": "0x323",
-      "amount": "$300",
-      "time": "Jan 13 2025, 10:00 AM",
-      "repaymentTime": "Jan 20 2025, 10:00 AM",
-      "isRepaid": false
-    },
-    {
-      "id": "2",
-      "transactionHash": "0xdef456",
-      "buyer": "0x323",
-      "amount": "$500",
-      "time": "Jan 14 2025, 11:00 AM",
-      "repaymentTime": "Jan 21 2025, 11:00 AM",
-      "isRepaid": false
-    },
-    {
-      "id": "3",
-      "transactionHash": "0xghi789",
-      "buyer": "0x323",
-      "amount": "$250",
-      "time": "Jan 15 2025, 12:00 PM",
-      "repaymentTime": "Jan 22 2025, 12:00 PM",
-      "isRepaid": false
-    },
-    {
       "id": "bab7",
       "transactionHash": "0x7d250dab1acfad0f6d273b5de6921bf52c2d0baf9d9596ee75e21e0c6529b305",
       "buyer": "0x057368343a05ebda9b4b71138f3d2a526ff410cbb626fcc17918b60a511b98e7",
