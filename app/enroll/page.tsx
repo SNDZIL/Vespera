@@ -70,6 +70,7 @@ export default function FaucetPage() {
       console.error(error);
     } finally {
       setIsLoading(false);
+      setResult("Successfully registered!");
     }
   };
 

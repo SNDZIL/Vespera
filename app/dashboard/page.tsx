@@ -51,7 +51,7 @@ const DashboardPage: React.FC = () => {
               <span className="text-green-500 text-sm mt-1">+3.6%</span>
             </div>
             <div className="bg-white p-4 rounded-md shadow-sm flex flex-col">
-              <span className="text-sm text-gray-500">Number of Debts</span>
+              <span className="text-sm text-gray-500">Number of Consumers</span>
               <span className="text-2xl font-bold">8</span>
               <span className="text-green-500 text-sm mt-1">+12.5%</span>
             </div>

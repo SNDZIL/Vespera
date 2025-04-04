@@ -118,7 +118,7 @@ const TransactionHistory: React.FC = () => {
                 <td className="py-3 px-4 max-w-[100px] truncate">{tx.buyer}</td>
                 <td className="py-3 px-4">{tx.amount}</td>
                 <td className="py-3 px-4">{tx.time}</td>
-                <td className="py-3 px-4">{getPayTime(tx.repaymentTime, tx.time)}</td>
+                <td className="py-3 px-4">{getPayTime(Number(tx.repaymentTime), tx.time)}</td>
                 <td className="py-3 px-4">
                   {tx.isRepaid ? (
                     <span className="text-green-500">Paid</span>

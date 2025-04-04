@@ -8,7 +8,7 @@ export const MODULE = "lend"
 export const ConfigAddress = "0xec1d87f61881c45f7252a4c519e8486c1c530571d26245758a78ea8ca662a17e"
 export const CoffeeAddress = "0x376fba087c1103d3378ec9f73cd3302ed56111b2d7721b864985637ad8a5bd23"
 export const CoffeeProfile = "0x54da9d25ff0772524ff18bdba4351ddba425ca4ef7ebcead9bc55878e93bf23"
-export const lendObj = "0x1a9374627fe49bb580070b3f6be6e4f7ef2c9d6096aa20a6b0d4fa56ddf3065b"
+export const lendObj = "0x33e75b64e039e63a6ec8755eb465dbbda453c6f0a17b902012fb6b02cd9c5ab5"
 
 export const getMaxCredit = async(address: string)=>{
   const payload = {

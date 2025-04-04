@@ -147,7 +147,7 @@ export default function CoffeePage() {
       const amount =
         typeof amountParam === "string"
           ? parseFloat(amountParam.toString()) * 10 ** 6
-          : amountParam;
+          : amountParam*10**6;
       const response = await sendLoan(CoffeeAddress, amount, Number(repayTimeParam));
       toast.success("Payment Success!");
       // here post history in the json server.
@@ -380,7 +380,6 @@ export default function CoffeePage() {
           )}
         </button>
       </div>
-      575757
     </div>
   );
 }
