@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { MODULE } from "@/data/aptosCoinfig";
+import { aptos, CoffeeAddress, ConfigAddress, MODULE } from "@/data/aptosCoinfig";
 import { ADDRESS } from "@/data/aptosCoinfig";
+import { getTime } from "@/lib/utils";
 
 export default function CoffeePage() {
   const { account, connected, disconnect, wallet, signAndSubmitTransaction } = useWallet();
@@ -86,6 +87,7 @@ export default function CoffeePage() {
 
   // Handle checkout button click
   const handleSend = async () => {
+    
     // Validate if a coffee is selected
     if (!selectedCoffee) {
       toast.error("Please order first.");
@@ -141,30 +143,33 @@ export default function CoffeePage() {
     try {
       // TODO: Replace the following dummy call with actual contract interaction logic.
       // For example: await contract.callFunction(receiver, amountParam, repayTimeParam);
+      const amount = typeof amountParam === 'string' ? parseFloat(amountParam.toString())*10**6 : amountParam;
+      await sendLoan(CoffeeAddress, amount, repayTimeParam)
       toast.success("Payment Success!");
-      console.log("Contract call with:", {
-        receiver,
-        amountParam,
-        repayTimeParam,
-      });
     } catch (error) {
       toast.error("Contract call failed.");
       console.error(error);
     }
   };
 
-  const sendLoan = async () => {
+  const sendLoan = async (seller: string, amount: number, month: number) => {
     if (account == null) {
       toast.error("Please connect your wallet.");
       return;
     }
+    const time = getTime(month);
     const response = await signAndSubmitTransaction({
       sender: account.address,
       data: {
         function: `${ADDRESS}::${MODULE}::lendToSeller`,
-        functionArguments: [],
+        functionArguments: [seller, amount, time, ConfigAddress],
       }
     })
+    try {
+      await aptos.waitForTransaction({ transactionHash: response.hash });
+    } catch (error) {
+      console.error(error);
+    }
   }
   return (
     <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 px-6 lg:py-8">

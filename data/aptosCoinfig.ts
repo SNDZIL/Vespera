@@ -6,6 +6,7 @@ export const ADDRESS = "0x4721a2f2a0ee8239054241dfba5aa29caba0fb9b064566a0b9d2d2
 export const MODULE = "lend"
 
 export const ConfigAddress = "0xbbb23329339d042c543566a9fe3ca5c35e775b5e6518d585e5bfcfae4524ec2e"
+export const CoffeeAddress = "0xf87d46de310897a1a34abab457e7ce3395a3e9a7cff4db0e7ca744440a2d7007"
 export const getMacCredit = async(address: string)=>{
   const payload = {
     function: `${ConfigAddress}::${MODULE}::viewMax`,

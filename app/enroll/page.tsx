@@ -25,9 +25,10 @@ export default function FaucetPage() {
     setIsLoading(true);
     setResult("Processing, please wait...");
     console.log("Registered successfully for: ", userAddress);
-
+    console.log(account?.address);
+    console.log(connected);
     try {
-      await handleRegister();
+      //await handleRegister();
       await axios.post(
         "http://localhost:3333/faucet",
         { address: userAddress },
@@ -85,9 +86,9 @@ export default function FaucetPage() {
           <input
             type="text"
             placeholder="Wallet address"
-            value={userAddress}
-            onChange={(e) => setUserAddress(e.target.value)}
-            className="w-full border border-gray-300 p-3 rounded-lg"
+            value={account?.address || "请先连接钱包"}
+            readOnly
+            className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50"
           />
           {/* <p className="mt-1 text-gray-500 text-sm">
             Limit: One request per address per 24 hours.
@@ -96,7 +97,7 @@ export default function FaucetPage() {
 
         {/* 领取按钮 */}
         <button
-          onClick={handleFaucet}
+          onClick={handleRegister}
           disabled={isLoading}
           className={`mt-6 w-full text-lg font-semibold p-3 rounded-lg transition-all duration-200 border-2 ${
             isLoading
