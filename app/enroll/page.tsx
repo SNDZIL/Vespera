@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 import toast, { Toaster } from "react-hot-toast"; // 引入 Toast 组件
+import { aptos, ADDRESS, MODULE } from "@/data/aptosCoinfig";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 export default function FaucetPage() {
-  const { account, connected, disconnect, wallet } = useWallet();
+  const { account, connected, disconnect, wallet, signAndSubmitTransaction } = useWallet();
   const [userAddress, setUserAddress] = useState("");
   const [result, setResult] = useState<string | null>(null);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
@@ -16,16 +17,17 @@ export default function FaucetPage() {
     if (isLoading) return;
 
     // 如果用户未输入地址，提示错误信息
-    if (!userAddress.trim()) {
-      toast.error("Please enter your wallet address.");
-      return;
-    }
+    // if (!userAddress.trim()) {
+    //   toast.error("Please enter your wallet address.");
+    //   return;
+    // }
 
     setIsLoading(true);
     setResult("Processing, please wait...");
     console.log("Registered successfully for: ", userAddress);
 
     try {
+      await handleRegister();
       await axios.post(
         "http://localhost:3333/faucet",
         { address: userAddress },
@@ -46,6 +48,26 @@ export default function FaucetPage() {
   const toggleFAQ = (index: number) => {
     setOpenFAQ(openFAQ === index ? null : index);
   };
+
+  const handleRegister = async () => {
+    if (account == null) {
+      toast.error("Please connect your wallet.");
+      return;
+    }
+    const response = await signAndSubmitTransaction({
+      sender: account.address,
+      data: {
+        function: `${ADDRESS}::${MODULE}::register`,
+        functionArguments: [],
+      },
+    });
+    // if you want to wait for transaction
+    try {
+      await aptos.waitForTransaction({ transactionHash: response.hash });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 px-6 lg:py-8">

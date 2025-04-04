@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aptos-labs/ts-sdk": "^1.38.0",
     "@aptos-labs/wallet-adapter-react": "3.5.0",
     "@metamask/providers": "^20.0.0",
     "@radix-ui/react-collapsible": "1.0.3",

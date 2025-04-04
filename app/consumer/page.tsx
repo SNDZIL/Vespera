@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { MODULE } from "@/data/aptosCoinfig";
+import { ADDRESS } from "@/data/aptosCoinfig";
 
 export default function CoffeePage() {
-  const { account, connected, disconnect, wallet } = useWallet();
+  const { account, connected, disconnect, wallet, signAndSubmitTransaction } = useWallet();
 
   // Coffee list with image paths added
   const coffeeList = [
@@ -151,6 +153,19 @@ export default function CoffeePage() {
     }
   };
 
+  const sendLoan = async () => {
+    if (account == null) {
+      toast.error("Please connect your wallet.");
+      return;
+    }
+    const response = await signAndSubmitTransaction({
+      sender: account.address,
+      data: {
+        function: `${ADDRESS}::${MODULE}::lendToSeller`,
+        functionArguments: [],
+      }
+    })
+  }
   return (
     <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 px-6 lg:py-8">
       <Toaster />
