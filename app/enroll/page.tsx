@@ -7,44 +7,45 @@ import { aptos, ADDRESS, MODULE } from "@/data/aptosCoinfig";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 export default function FaucetPage() {
-  const { account, connected, disconnect, wallet, signAndSubmitTransaction } = useWallet();
+  const { account, connected, disconnect, wallet, signAndSubmitTransaction } =
+    useWallet();
   const [userAddress, setUserAddress] = useState("");
   const [result, setResult] = useState<string | null>(null);
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleFaucet = async () => {
-    if (isLoading) return;
+  // const handleFaucet = async () => {
+  //   if (isLoading) return;
 
-    // 如果用户未输入地址，提示错误信息
-    // if (!userAddress.trim()) {
-    //   toast.error("Please enter your wallet address.");
-    //   return;
-    // }
+  //   // 如果用户未输入地址，提示错误信息
+  //   // if (!userAddress.trim()) {
+  //   //   toast.error("Please enter your wallet address.");
+  //   //   return;
+  //   // }
 
-    setIsLoading(true);
-    setResult("Processing, please wait...");
-    console.log("Registered successfully for: ", userAddress);
-    console.log(account?.address);
-    console.log(connected);
-    try {
-      //await handleRegister();
-      await axios.post(
-        "http://localhost:3333/faucet",
-        { address: userAddress },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      setResult(`Tokens were successfully sent to [${userAddress}].`);
-      toast.success("Tokens sent successfully!");
-    } catch (err: unknown) {
-      const error = err as AxiosError<{ message: string }>;
-      console.error("Axios error:", error.response?.data || error.message);
-      setResult(`${error.response?.data?.message || "Failed to send tokens."}`);
-      toast.error(error.response?.data?.message || "Failed to send tokens.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   setIsLoading(true);
+  //   setResult("Processing, please wait...");
+  //   console.log("Registered successfully for: ", userAddress);
+  //   console.log(account?.address);
+  //   console.log(connected);
+  //   try {
+  //     //await handleRegister();
+  //     await axios.post(
+  //       "http://localhost:3333/faucet",
+  //       { address: userAddress },
+  //       { headers: { "Content-Type": "application/json" } }
+  //     );
+  //     setResult(`Tokens were successfully sent to [${userAddress}].`);
+  //     toast.success("Tokens sent successfully!");
+  //   } catch (err: unknown) {
+  //     const error = err as AxiosError<{ message: string }>;
+  //     console.error("Axios error:", error.response?.data || error.message);
+  //     setResult(`${error.response?.data?.message || "Failed to send tokens."}`);
+  //     toast.error(error.response?.data?.message || "Failed to send tokens.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const toggleFAQ = (index: number) => {
     setOpenFAQ(openFAQ === index ? null : index);
@@ -55,20 +56,24 @@ export default function FaucetPage() {
       toast.error("Please connect your wallet.");
       return;
     }
-    const response = await signAndSubmitTransaction({
-      sender: account.address,
-      data: {
-        function: `${ADDRESS}::${MODULE}::register`,
-        functionArguments: [],
-      },
-    });
-    // if you want to wait for transaction
+    setIsLoading(true);
+    setResult("Processing, please wait...");
     try {
+      const response = await signAndSubmitTransaction({
+        sender: account.address,
+        data: {
+          function: `${ADDRESS}::${MODULE}::register`,
+          functionArguments: [],
+        },
+      });
+      // if you want to wait for transaction
       await aptos.waitForTransaction({ transactionHash: response.hash });
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 px-6 lg:py-8">
@@ -86,7 +91,7 @@ export default function FaucetPage() {
           <input
             type="text"
             placeholder="Wallet address"
-            value={account?.address || "请先连接钱包"}
+            value={account?.address || "Please connect your wallet first"}
             readOnly
             className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50"
           />

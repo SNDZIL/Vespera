@@ -3,12 +3,18 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
-import { aptos, CoffeeAddress, ConfigAddress, MODULE } from "@/data/aptosCoinfig";
+import {
+  aptos,
+  CoffeeAddress,
+  ConfigAddress,
+  MODULE,
+} from "@/data/aptosCoinfig";
 import { ADDRESS } from "@/data/aptosCoinfig";
 import { getTime } from "@/lib/utils";
 
 export default function CoffeePage() {
-  const { account, connected, disconnect, wallet, signAndSubmitTransaction } = useWallet();
+  const { account, connected, disconnect, wallet, signAndSubmitTransaction } =
+    useWallet();
 
   // Coffee list with image paths added
   const coffeeList = [
@@ -36,6 +42,8 @@ export default function CoffeePage() {
   // Calculated results
   const [calculatedTime, setCalculatedTime] = useState<string>(""); // For input amount -> calculated time
   const [calculatedAmount, setCalculatedAmount] = useState<string>(""); // For input time -> calculated amount
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // Handle coffee selection
   const handleSelectCoffee = (coffeeName: string, coffeePrice: number) => {
@@ -87,7 +95,6 @@ export default function CoffeePage() {
 
   // Handle checkout button click
   const handleSend = async () => {
-    
     // Validate if a coffee is selected
     if (!selectedCoffee) {
       toast.error("Please order first.");
@@ -98,6 +105,8 @@ export default function CoffeePage() {
       toast.error("Please connect your wallet.");
       return;
     }
+
+    setIsLoading(true);
 
     if (!isAmountToTime) {
       // Mode: "Select repayment time" -> calculated amount is used.
@@ -141,14 +150,34 @@ export default function CoffeePage() {
     }
 
     try {
-      // TODO: Replace the following dummy call with actual contract interaction logic.
-      // For example: await contract.callFunction(receiver, amountParam, repayTimeParam);
-      const amount = typeof amountParam === 'string' ? parseFloat(amountParam.toString())*10**6 : amountParam;
-      await sendLoan(CoffeeAddress, amount, Number(repayTimeParam))
+      const amount =
+        typeof amountParam === "string"
+          ? parseFloat(amountParam.toString()) * 10 ** 6
+          : amountParam;
+      await sendLoan(CoffeeAddress, amount, Number(repayTimeParam));
       toast.success("Payment Success!");
+      // here post history in the json server.
+      const newRecord = {
+        // id 自动由 JSON Server 生成
+        transactionHash: response.hash,
+        buyer: account.address,
+        amount: amountParam,
+        time: new Date().toLocaleString(),
+        repaymentTime: repayTimeParam,
+        isRepaid: false,
+      };
+      await fetch("http://localhost:8000/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newRecord),
+      });
     } catch (error) {
       toast.error("Contract call failed.");
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -163,14 +192,15 @@ export default function CoffeePage() {
       data: {
         function: `${ADDRESS}::${MODULE}::lendToSeller`,
         functionArguments: [seller, amount, time, ConfigAddress],
-      }
-    })
+      },
+    });
     try {
       await aptos.waitForTransaction({ transactionHash: response.hash });
     } catch (error) {
       console.error(error);
     }
-  }
+    return response;
+  };
   return (
     <div className="max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 px-6 lg:py-8">
       <Toaster />
@@ -338,9 +368,22 @@ export default function CoffeePage() {
         {/* Checkout button */}
         <button
           onClick={handleSend}
-          className="mt-4 w-full text-lg font-semibold p-3 rounded-lg transition-all duration-200 border-2 text-blue-500 bg-transparent border-blue-400 hover:bg-blue-400 hover:text-white cursor-pointer"
+          disabled={isLoading}
+          className={`mt-4 w-full text-lg font-semibold p-3 rounded-lg transition-all duration-200 border-2 ${
+            isLoading
+              ? "bg-gray-400 text-blue-50 cursor-not-allowed border-gray-400"
+              : "text-blue-500 bg-transparent border-blue-400 hover:bg-blue-400 hover:text-white cursor-pointer"
+          }`}
         >
-          Check Out
+          {isLoading ? (
+            <div className="flex items-center justify-center">
+              {/* Tailwind CSS Spinner */}
+              <div className="w-4 h-4 border-3 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+              Processing...
+            </div>
+          ) : (
+            "Check Out"
+          )}
         </button>
       </div>
     </div>
